@@ -1,5 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory
+} from "react-router-dom";
 
 export default function SearchGroups({ state, wallGet }) {
   return (
@@ -15,16 +21,16 @@ export default function SearchGroups({ state, wallGet }) {
           photo_100,
           photo_200
         } = group;
-// to={`https://vk.com/${screen_name}`}
         return (
           <li className={"search-list__item"} key={id}>
             <Link
               className={"search-list__link"}
-              to={`/newsposts${screen_name}`}
-              target="_blank"
-              rel="noreferrer"
+              // to={location => `${location.pathname}newsposts?${screen_name}`}
+              to='/newsposts'
+              // target="_blank"
+              // rel="noreferrer"
               onClick={(e) => {
-                e.preventDefault();
+                // e.preventDefault();
                 wallGet(id);
               }}
             >
@@ -37,6 +43,8 @@ export default function SearchGroups({ state, wallGet }) {
     </ul>
   );
 }
+
+
 
 // {id: 95810781, name: "Vue.js", screen_name: "vuejs", is_closed: 0, type: "group"…}
 // id: 95810781

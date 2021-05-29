@@ -62,7 +62,23 @@ export default function App() {
     },
     [call]
   );
+  const wallSearch = useCallback(
+    async (id) => {
+      const { response } = await call("wall.search", { owner_id: `-${id}` });
+      const { count, items } = response;
 
+      count &&
+        setWallState((prevState) => ({
+          ...prevState,
+          groups: {
+            ...groupsState.groups,
+            count,
+            chunk: items
+          }
+        }));
+    },
+    [call]
+  );
   // const groupsGetById = useCallback(
   //   async (group_id) => {
   //     const { response } = await call("groups.getById", { group_id });
@@ -95,10 +111,11 @@ export default function App() {
       <Router>
         <Switch>
         <Route exact path="/" render={() => <Main
+        initValue={'constcode'}
         onEnter={goupSearch}
   state={groupsState}
   wallGet={wallGet} /> } />
-<Route path="/newsposts" render={()=> <NewsPosts /> } />
+<Route path="/newsposts" render={()=> <NewsPosts wallState={wallState} /> } />
         </Switch>
       </Router>
     </>
