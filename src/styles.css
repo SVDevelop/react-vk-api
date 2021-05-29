@@ -1,0 +1,27 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+.search-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid red;
+}
+.search-list__item {
+margin: 5px;
+padding: 10px;
+width: 120px;
+}
+.search-list__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.search-list__img {
+  max-width: 100%;
+}
+.search-list__title {
+  text-align: center;
+}
+.search-list {}
