@@ -1,4 +1,5 @@
 import Main from './Main'
-import NewsPosts from './NewsPosts'
+import GroupWall from './GroupWall'
+import Error from './Error'
 
-export default {Main, NewsPosts}
+export default {Main, GroupWall, Error}

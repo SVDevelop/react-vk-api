@@ -10,7 +10,7 @@ import {
 export default function SearchGroups({ state, wallGet }) {
   return (
     <ul className={"search-list"}>
-      {state.groups.chunk.map((group) => {
+      {state.groups.items.map((group) => {
         const {
           id,
           name,

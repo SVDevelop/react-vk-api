@@ -1,12 +1,54 @@
-.App {
+#root {
   font-family: sans-serif;
-  text-align: center;
+  background: #EDEEF0;
+}
+.container {
+  padding: 15px;
+  margin: 0 auto;
+  max-width: 769px;
+}
+.user {
+}
+.header {
+  padding: 0 20px;
+}
+.page-title {
+  padding: 0 15px;
+  color: rgb(194, 191, 191);
+}
+/* wall-posts */
+.wall-posts {
+  /* ul */
+  margin: 10px 15px;
+  padding: 0;
+  list-style: none;
+}
+.wall-posts__item {
+  padding: 0 20px 15px;
+  border-radius: 4px;
+  background: #fff;
+}
+.wall-posts__header {
+  margin: 10px 0;
+  padding: 12px 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid #DCE1E6;
+}
+.wall-posts__title {}
+.wall-posts__content {}
+.wall-posts__date {}
+/* end wall-posts */
+.filters {
+margin: 0 15px;
+}
+.filters__btn {
+  border-radius: 6px;
 }
 .search-list {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  border: 1px solid red;
 }
 .search-list__item {
 margin: 5px;
@@ -25,3 +67,70 @@ width: 120px;
   text-align: center;
 }
 .search-list {}
+
+.attachments {
+  width: 100%;
+}
+.attachments__album {
+  position: relative;
+}
+.attachments__info {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0; 
+  width: 100%;
+  color: #fff;
+}
+.attachments__item {
+  margin: 10px 0;
+}
+.attachment__photo {
+  width: 100%;
+}
+.attachments__album > img,
+.attachment__photo > img {
+  width: 100%;
+}
+.attachment__link {
+  display: flex;
+  align-items: center;
+}
+.attachment__title {
+  padding: 0 0 0 10px;
+}
+.attachments__count {}
+
+/* like-panel */
+.like-panel {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.like-panel__date {
+  margin: 0 5px;
+}
+.wrapper {
+  display: flex;
+  flex-grow: 2;
+  justify-content: flex-end;
+}
+.wrapper > * {
+  flex: 0 1 35px;
+  width: auto;
+  display: flex;
+  justify-content: space-between;
+}
+.wrapper > * > *:first-child {
+  margin-right: 5px;
+}
+.like-panel__likes {
+  margin: 0 5px;
+}
+.like-panel__retweet {
+  margin: 0 5px;
+}
+.like-panel__comments {
+  margin: 0 5px;
+}

@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import { useVK } from "./../VK";
 
-export default function useQuery({ method, params }) {
+export default function useQuery({cb, method, params }) {
   const { call } = useVK();
   const [response, setResponse] = useState({
     response: {
@@ -21,20 +21,22 @@ export default function useQuery({ method, params }) {
           response: { ...prev.response, count, items }
         }));
     },
-    [call]
+    [call, cb, method, params]
   );
 
   return func;
 }
 
 useQuery.PropTypes = {
-  method: PropTypes.string.isRequired,
-  params: PropTypes.object
+    cb: PropTypes.func.isRequired,
+    method: PropTypes.string.isRequired,
+    params: PropTypes.object
 };
 
 useQuery.defaultProps = {
-  method: "",
-  params: {}
+    cb() {},
+    method: "",
+    params: {},
 };
 //  const wallGet = useCallback(
 //   async (id) => {
