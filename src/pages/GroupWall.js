@@ -27,7 +27,6 @@ export default function GroupWall(props) {
 	const [originalPosts, setOriginalPosts] = useState([]);
 	const [sortField, setSortdField] = useState(null);
 
-	console.log(count);
 	const { screen_name: screenName } = useParams();
 	const { call } = useVK();
 
@@ -44,7 +43,7 @@ export default function GroupWall(props) {
 
 		const { count, items } = data.response;
 
-		setCount(count);
+		setCount(countPrev => countPrev + count);
 		setOriginalPosts(prev => prev.slice(0).concat(items).slice(0));
 		setCountQuery(() => countQuery + 1)
 
