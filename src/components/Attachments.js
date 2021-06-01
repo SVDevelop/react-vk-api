@@ -1,14 +1,14 @@
 import React from 'react'
 
-export default function Attachments ({attachments, i}) {
+export default function Attachment ({attachments}) {
     return (
         <div className="attachments">
         {
         attachments
             .map((attachment) => {
+                // console.log(attachment.video, 'sd');
                 switch (attachment.type) {
                     case "video":
-                        console.log(attachment, 'video');
                       return (
                         <>
                           <video controls width="400" height="300">
@@ -39,12 +39,25 @@ export default function Attachments ({attachments, i}) {
                         return (
                             <div className="attachment__link">
                                 <a href={attachment.link.url} target="_blank" rel="nofollow noopener">
-                                    <img src={attachment.link.photo.photo_130} alt={attachment.link.title} />
+                                    <img src={attachment.link.photo?.photo_130} alt={attachment.link.title} />
                                 </a>
                                 
                                 <a className="attachment__title" href={attachment.link.url} target="_blank" rel="nofollow noopener">{attachment.link.title}</a>
                             </div>
                         );
+                    case "audio":
+                        // console.log(attachment);
+                        // audio:
+                        // artist: "EDEN"
+                        // date: 1621017375
+                        // id: 456243817
+                        // owner_id: 2000324282
+                        // short_videos_allowed: false
+                        // stories_allowed: false
+                        // stories_cover_allowed: true
+                        // title: "Деньги"
+                        // url: "https://vk.com/mp3/audio_api_unavailable.mp3"
+                        return null
                     default:
                         return null;
                 }

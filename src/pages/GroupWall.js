@@ -1,10 +1,14 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import {Attachments, Header, LikePanel} from "../components";
+import {DataContext} from '../ContextApp'
 
-export default function GroupWall ({ wallState, querytest }) {
+export default function GroupWall ({ wallState }) {
+  const {sortFlag, qsort, sortArr, setSortArr} = DataContext()
   const { count, items } = wallState.groups;
-
+  // const posts = qsort(items, 'likes')
+  // console.log("original:", items, "sort:", posts);
+  console.log(qsort(items, 'date'));
   const timeConverter = (UNIX_timestamp) => {
     const a = new Date(UNIX_timestamp * 1000);
     const months = [
@@ -31,13 +35,17 @@ export default function GroupWall ({ wallState, querytest }) {
       date + " " + month + " " + year + " " + hour + ":" + min + ":" + sec;
     return time;
   };
+  items.length && setSortArr(qsort(items, sortFlag))
+  let posts = sortArr.length ? sortArr.map(i=>i) : items.map(i=>i)
   return (
     <div className="container">
       <Header title={'Лента'} />
       <div className="content">
       <ul className={"wall-posts"}>
         {items &&
-          items.map((post) => {
+
+        // сортируем переданной функцией из DataContext  sort
+        posts.map((post) => {
             const {
               attachments,
               comments,

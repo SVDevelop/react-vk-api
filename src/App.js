@@ -1,13 +1,15 @@
 import { useCallback, useState } from "react";
 import GroupWall from "./pages/GroupWall";
 import useQuery from "./hooks/useQuery";
-import Main from "./pages/Main";
+import Home from "./pages/Home";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import { useVK } from "./VK";
+import Main from "./components/Main";
 
-export default function App() {
+export default function App () {
   const { login, user, authenticated, call } = useVK();
+
   const [groupsState, setGroupsState] = useState({
     groups: {
       count: 0,
@@ -20,15 +22,11 @@ export default function App() {
       items: []
     }
   });
-  // const [wallVisible, setWallVisible] = useState(false);
-
-  // const showWall = () => setWallVisible(!wallVisible);
-
+  
   const goupSearch = useCallback(
     async (value) => {
-      const { response } = await call("groups.search", { q: value, sort: 0 });
+      const { response } = await call("groups.search", { q: value });
       const { count, items } = response;
-      // console.log('goupSearch', count, items);
 
       setGroupsState((prevState) => ({
         ...prevState,
@@ -38,6 +36,7 @@ export default function App() {
           items: items
         }
       }));
+      // setGroups(count, items)
     },
     [call]
   );
@@ -108,19 +107,22 @@ export default function App() {
     <>
       <UserLink user={user} />
       <br />
-      <Router>
-        <Switch>
-          <Route exact path="/" render={() => 
-            <Main
-              initValue={'constcode'}
-              onEnter={goupSearch}
-              state={groupsState}
-              wallGet={wallGet}
-            />} 
-          />
-          <Route path="/newsposts" render={() => <GroupWall wallState={wallState} /> } />
-        </Switch>
-      </Router>
+      <Main>
+          <Router>
+            <Switch>
+              <Route exact path="/" render={() => 
+                <Home
+                initValue={'constcode'}
+                onEnter={goupSearch}
+                
+                state={groupsState}
+                wallGet={wallGet}
+                />} 
+                />
+              <Route path="/newsposts" render={() => <GroupWall wallState={wallState} /> } />
+            </Switch>
+          </Router>
+      </Main>
     </>
   );
 }
@@ -138,3 +140,5 @@ function UserLink(props) {
     </>
   );
 }
+
+
