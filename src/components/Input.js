@@ -30,7 +30,6 @@ export default function Input(props) {
     <input
       type="text"
       value={value}
-      // onChange={(e) => setValue(e.target.value)}
       onChange={(e) => {
         const { value } = e.target;
         setValue(value);

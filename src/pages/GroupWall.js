@@ -22,24 +22,19 @@ const timeConverter = (UNIX_timestamp) => {
 };
 
 export default function GroupWall(props) {
-	// const { sortFlag, qsort, sortArr, setSortArr } = DataContext();
-	// const { count, items } = wallState.groups;
-	// // const posts = qsort(items, 'likes')
-	// // console.log("original:", items, "sort:", posts);
-	// console.log(qsort(items, "date"));
-
-	// items.length && setSortArr(qsort(items, sortFlag));
-	// let posts = sortArr.length ? sortArr.map((i) => i) : items.map((i) => i);
+	const [countQuery, setCountQuery] = useState(0)
 	const [count, setCount] = useState(0);
 	const [originalPosts, setOriginalPosts] = useState([]);
 	const [sortField, setSortdField] = useState(null);
 
+	console.log(count);
 	const { screen_name: screenName } = useParams();
 	const { call } = useVK();
 
 	useEffect(async () => {
 		const data = await call("wall.get", {
 			domain: screenName,
+			offset: 20 * countQuery,
 			extended: 1,
 		});
 
@@ -50,29 +45,34 @@ export default function GroupWall(props) {
 		const { count, items } = data.response;
 
 		setCount(count);
-		setOriginalPosts(items);
+		setOriginalPosts(prev => prev.slice(0).concat(items).slice(0));
+		setCountQuery(() => countQuery + 1)
 
-		// if (count) {
-		// }
-
-		// count &&
-		// 	setWallState((prevState) => ({
-		// 		...prevState,
-		// 		groups: {
-		// 			...groupsState.groups,
-		// 			count,
-		// 			items: items,
-		// 		},
-		// 	}));
-	}, [screenName]);
+	}, [screenName, countQuery]);
 
 	const posts = useMemo(() => {
 		let current = originalPosts.slice(0);
 
-		if (sortField === "likes") {
-			current = current.sort((a, b) => b.likes.count - a.likes.count);
+		switch (sortField) {
+			case "date": {
+				current = current.sort((a, b) => b.datet - a.date);
+				break
+			}
+			case "likes": {
+				current = current.sort((a, b) => b.likes.count - a.likes.count);
+				break
+			}
+			case "comments": {
+				current = current.sort((a, b) => b.comments.count - a.comments.count);
+				break
+			}
+			case "reposts": {
+				current = current.sort((a, b) => b.reposts.count - a.reposts.count);
+				break
+			}
+			default: 
+				return current.filter((item) => item.text);
 		}
-
 		return current.filter((item) => item.text);
 	}, [sortField, originalPosts]);
 
@@ -98,10 +98,6 @@ export default function GroupWall(props) {
 							text,
 						} = post;
 
-						// if (!text) {
-						// 	return;
-						// }
-
 						return (
 							<li key={id} className={"wall-posts__item"}>
 								<div className="wall-posts__header">
@@ -123,7 +119,8 @@ export default function GroupWall(props) {
 										<div className="wall-posts__content">{text}</div>
 									)
 								)}
-								{attachments && <Attachments attachments={attachments} />}
+								{attachments &&
+									<Attachments attachments={attachments} />}
 							</li>
 						);
 					})}
