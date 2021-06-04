@@ -5,7 +5,7 @@ export default function Attachment ({attachments}) {
         <div className="attachments">
         {
         attachments
-            .map((attachment) => {
+            .map((attachment, i) => {
                 // console.log(attachment.video, 'sd');
                 switch (attachment.type) {
                     case "video":

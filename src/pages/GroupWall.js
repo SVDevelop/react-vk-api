@@ -44,7 +44,7 @@ export default function GroupWall(props) {
 		const { count, items } = data.response;
 
 		setCount(countPrev => countPrev + count);
-		setOriginalPosts(prev => prev.slice(0).concat(items).slice(0));
+		setOriginalPosts(prev => [...prev.slice(0).concat(items)]);
 		setCountQuery(() => countQuery + 1)
 
 	}, [screenName, countQuery]);
@@ -74,11 +74,11 @@ export default function GroupWall(props) {
 		}
 		return current.filter((item) => item.text);
 	}, [sortField, originalPosts]);
-
+console.log(originalPosts);
 	return (
 		<div className="container">
+			<HomeButton />
 			<Header title={`Лента (${sortField})`} onSelect={setSortdField} />
-
 			<div className="content">
 				<ul className="wall-posts">
 					{posts.map((post) => {

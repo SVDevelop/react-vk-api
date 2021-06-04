@@ -37,7 +37,6 @@ export default function App() {
 					items: items,
 				},
 			}));
-			// setGroups(count, items)
 		},
 		[call]
 	);
